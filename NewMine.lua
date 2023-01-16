@@ -5,13 +5,13 @@ function forward()
 end
 
 function up()
-    while not turtle.Up() do
+    while not turtle.up() do
         turtle.digUp()
     end
 end
 
 function down()
-    while not turtle.Down() do
+    while not turtle.down() do
         turtle.digDown()
     end
 end
