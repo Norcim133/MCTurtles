@@ -50,7 +50,7 @@ function checkChildren(ore)
 
     children = {"forward", "right", "left", "up", "down"}
 
-    for key, child in children do
+    for key, child in pairs(children) do
         if child == "forward" then
             checkPlanar(ore)
         end
