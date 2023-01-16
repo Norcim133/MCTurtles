@@ -1,33 +1,97 @@
-function initializeState()
-    local state = {
-        x = 0,
-        y = 0,
-        z = 0,
-        facing = "north",
-    }
-    return state
+function forward()
+    while not turtle.forward() do
+        turtle.dig()
+    end
 end
 
-function getState()
-  local file = io.open( "TurtleState", "r" )
-  local contents = file:read( "*a" )
-  file:close()
-  if contents then
-      state = textutils.unserialize( contents )
-      return state
-  end
+function up()
+    while not turtle.Up() do
+        turtle.digUp()
+    end
 end
 
-function setState(state)
-  local file = io.open( "TurtleState", "w" )
-  file:write( textutils.serialize( state ) )
-  file:close( )
+function down()
+    while not turtle.Down() do
+        turtle.digDown()
+    end
 end
 
-function GetChildren()
+function turnRight()
+    turtle.turnRight()
+end
+
+function turnLeft()
+    turtle.turnLeft()
+end
+
+function turnaround()
+    turtle.turnRight()
+    turtle.turnRight()
+end
+
+function back()
+    turnaround()
+    forward()
+    turnaround()
+end
+
+function checkPlanar(ore)
+    local success, data = turtle.inspect()
+    if success then
+        if data.name == ore then
+            forward()
+            checkChildren(ore)
+            back()
+        end
+    end
+end
+
+function checkChildren(ore)
+
+    children = {"forward", "right", "left", "up", "down"}
+
+    for child in children do
+        if child == "forward" then
+            checkPlanar(ore)
+        end
+
+        if child == "right" then
+            turnRight()
+            checkPlanar(ore)
+            turnLeft()
+        end
+
+        if child == "left" then
+            turnLeft()
+            checkPlanar(ore)
+            turnRight()
+        end
+
+        if child == "up" then
+            local success, data = turtle.inspectUp()
+            if success then
+                if data.name == ore then
+                    up()
+                    checkChildren(ore)
+                    down()
+                end
+            end
+        end
+
+        if child == "down" then
+            local success, data = turtle.inspectDown()
+            if success then
+                if data.name == ore then
+                    down()
+                    checkChildren(ore)
+                    up()
+                end
+            end
+        end
+
+
+    end
 
 end
 
-state = initializeState()
-setState(state)
-
+return {checkChildren = checkChildren, checkPlanar=checkPlanar, back=back, turnaround=turnaround, turnLeft=turnLeft, turnRight=turnRight, down=down, up=up, forward=forward }

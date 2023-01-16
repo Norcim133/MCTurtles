@@ -1,16 +1,28 @@
-# This is a sample Python script.
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import time
 
-# Press ⌃R to execute it or replace it with your code.
-# Press Double ⇧ to search everywhere for classes, files, tool windows, actions, and settings.
+hostName = "localhost"
+serverPort = 8080
 
+class MyServer(BaseHTTPRequestHandler):
+    def do_GET(self):
+        self.send_response(200)
+        self.send_header("Content-type", "text/html")
+        self.end_headers()
+        self.wfile.write(bytes("<html><head><title>https://pythonbasics.org</title></head>", "utf-8"))
+        self.wfile.write(bytes("<p>Request: %s</p>" % self.path, "utf-8"))
+        self.wfile.write(bytes("<body>", "utf-8"))
+        self.wfile.write(bytes("<p>This is an example web server.</p>", "utf-8"))
+        self.wfile.write(bytes("</body></html>", "utf-8"))
 
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press ⌘F8 to toggle the breakpoint.
+if __name__ == "__main__":        
+    webServer = HTTPServer((hostName, serverPort), MyServer)
+    print("Server started http://%s:%s" % (hostName, serverPort))
 
+    try:
+        webServer.serve_forever()
+    except KeyboardInterrupt:
+        pass
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    webServer.server_close()
+    print("Server stopped.")

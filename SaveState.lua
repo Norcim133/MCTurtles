@@ -52,4 +52,3 @@ end
 state = initializeState()
 setState(state)
 
-return { setState = setState, getState = getState, unserialize = unserialize, serialize = serialize, initializeState = initializeState }
