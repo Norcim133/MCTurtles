@@ -143,4 +143,4 @@ function checkChildren(targetOres)
 
 end
 
-return {forward=forward, up=up, turnLeft=turnLeft, turnRight=turnRight, turnaround=turnaround, down=down, checkChildren=checkChildren, checkPlanar=checkPlanar}
+return {forward=forward, up=up, turnLeft=turnLeft, turnRight=turnRight, turnaround=turnaround, down=down, checkChildren=checkChildren, checkPlanar=checkPlanar, digUp=digUp, digDown=digDown, dig=dig, canDig=canDig}
