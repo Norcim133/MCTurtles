@@ -1,3 +1,5 @@
+
+
 function forward()
     while not turtle.forward() do
         turtle.dig()
@@ -13,7 +15,7 @@ function up()
 end
 
 function down()
-    while not turtle.Down() do
+    while not turtle.down() do
         turtle.digDown()
     end
     return true
@@ -61,7 +63,7 @@ function checkChildren(ore)
 
     children = {"forward", "right", "left", "up", "down"}
 
-    for child in children do
+    for key, child in pairs(children) do
         if child == "forward" then
             checkPlanar(ore)
         end

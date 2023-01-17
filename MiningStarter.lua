@@ -6,6 +6,7 @@ local torch=0
 for i=1, 400 do
 
     if forward() then
+        print("Here")
         returnSteps = returnSteps + 1
         checkChildren(ore)
         while turtle.digUp() do
