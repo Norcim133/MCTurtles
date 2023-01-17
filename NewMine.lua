@@ -48,6 +48,39 @@ function back()
     turnaround()
 end
 
+function canDig(blockData)
+    if blockData.name == "forbidden_arcanus:stella_arcanum" then
+        return false
+    end
+end
+
+function dig()
+    blockPresent, blockData = turtle.inspect()
+    if canDig(blockData) then
+        turtle.dig()
+    else
+        print("I am not supposed to dig here")
+    end
+end
+
+function digUp()
+    blockPresent, blockData = turtle.inspectUp()
+    if canDig(blockData) then
+        turtle.digUp()
+    else
+        print("I am not supposed to dig here")
+    end
+end
+
+function digDown()
+    blockPresent, blockData = turtle.inspectDown()
+    if canDig(blockData) then
+        turtle.digDown()
+    else
+        print("I am not supposed to dig here")
+    end
+end
+
 function checkPlanar(targetOres)
     local success, data = turtle.inspect()
     blockName = data.name

@@ -7,6 +7,8 @@ function removeFromSet(set, key)
 end
 
 function setContains(set, key)
+    print("Set", set)
+    print("Key", key)
     return set[key] ~= nil
 end
 

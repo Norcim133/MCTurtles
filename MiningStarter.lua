@@ -3,12 +3,12 @@ local returnSteps=0
 
 local torch=0
 
-for i=1, 400 do
+for i=1, 100 do
 
     if forward() then
         print("Here")
         returnSteps = returnSteps + 1
-        checkChildren(ore)
+        checkChildren(targetOres)
         while turtle.digUp() do
             print("Digging")
         end
@@ -31,4 +31,4 @@ for j=1, returnSteps do
 end
 
 args = {...}
-ore = (args[1])
+targetOres = (args[1])
