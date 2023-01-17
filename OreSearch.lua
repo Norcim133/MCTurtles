@@ -2,21 +2,21 @@ require("CheckLists")
 
 function forward()
     while not turtle.forward() do
-        turtle.dig()
+        dig()
     end
     return true
 end
 
 function up()
     while not turtle.Up() do
-        turtle.digUp()
+        digUp()
     end
     return true
 end
 
 function down()
     while not turtle.down() do
-        turtle.digDown()
+        digDown()
     end
     return true
 end
