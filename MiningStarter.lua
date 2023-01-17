@@ -1,22 +1,20 @@
+require("OreSearch")
 local returnSteps=0
 
 local torch=0
 
-for i=1, 100 do
+for i=1, 400 do
 
-    while turtle.dig() do
-        print("Digging forward")
-    end
-
-    if turtle.forward() then
+    if forward() then
         returnSteps = returnSteps + 1
+        checkChildren(ore)
         while turtle.digUp() do
             print("Digging")
         end
         if torch == 6 then
-            turtle.turnLeft()
+            turnLeft()
             turtle.placeUp() --Need to check for torch
-            turtle.turnRight()
+            turnRight()
             torch=0
         end
     end
@@ -24,9 +22,12 @@ for i=1, 100 do
     torch = torch + 1
 end
 
-turtle.turnLeft()
-turtle.turnLeft()
+turnLeft()
+turnLeft()
 
 for j=1, returnSteps do
-    turtle.forward()
+    forward()
 end
+
+args = {...}
+ore = (args[1])

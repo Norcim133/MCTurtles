@@ -2,26 +2,37 @@ function forward()
     while not turtle.forward() do
         turtle.dig()
     end
+    return true
 end
 
 function up()
     while not turtle.Up() do
         turtle.digUp()
     end
+    return true
 end
 
 function down()
     while not turtle.Down() do
         turtle.digDown()
     end
+    return true
 end
 
 function turnRight()
-    turtle.turnRight()
+    if turtle.turnRight() then
+        return true
+    else
+        return false
+    end
 end
 
 function turnLeft()
-    turtle.turnLeft()
+    if turtle.turnLeft() then
+        return true
+    else
+        return false
+    end
 end
 
 function turnaround()
