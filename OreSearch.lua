@@ -1,4 +1,4 @@
-
+require("CheckLists")
 
 function forward()
     while not turtle.forward() do
@@ -48,44 +48,46 @@ function back()
     turnaround()
 end
 
-function checkPlanar(ore)
+function checkPlanar(targetOres)
     local success, data = turtle.inspect()
+    blockName = data.name
     if success then
-        if data.name == ore then
+        if setContains(targetOres, blockName) then
             forward()
-            checkChildren(ore)
+            checkChildren(targetOres)
             back()
         end
     end
 end
 
-function checkChildren(ore)
+function checkChildren(targetOres)
 
     children = {"forward", "right", "left", "up", "down"}
 
     for key, child in pairs(children) do
         if child == "forward" then
-            checkPlanar(ore)
+            checkPlanar(targetOres)
         end
 
         if child == "right" then
             turnRight()
-            checkPlanar(ore)
+            checkPlanar(targetOres)
             turnLeft()
         end
 
         if child == "left" then
             turnLeft()
-            checkPlanar(ore)
+            checkPlanar(targetOres)
             turnRight()
         end
 
         if child == "up" then
             local success, data = turtle.inspectUp()
+            blockName = data.name
             if success then
-                if data.name == ore then
+                if setContains(targetOres, blockName) then
                     up()
-                    checkChildren(ore)
+                    checkChildren(targetOres)
                     down()
                 end
             end
@@ -93,10 +95,11 @@ function checkChildren(ore)
 
         if child == "down" then
             local success, data = turtle.inspectDown()
+            blockName = data.name
             if success then
-                if data.name == ore then
+                if setContains(targetOres, blockName) then
                     down()
-                    checkChildren(ore)
+                    checkChildren(targetOres)
                     up()
                 end
             end
