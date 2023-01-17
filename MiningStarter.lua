@@ -9,8 +9,8 @@ for i=1, 100 do
         print("Here")
         returnSteps = returnSteps + 1
         checkChildren(targetOres)
-        while turtle.digUp() do
-            print("Digging")
+        while digUp() do
+            print("Digging up")
         end
         if torch == 6 then
             turnLeft()
@@ -27,7 +27,15 @@ turnLeft()
 turnLeft()
 
 for j=1, returnSteps do
-    forward()
+    if forward() then
+        checkChildren(targetOres)
+    end
+    if torch == 6 then
+        turnRight()
+        turtle.placeDown() --Need to check for torch
+        turnLeft()
+        torch=0
+    end
 end
 
 args = {...}

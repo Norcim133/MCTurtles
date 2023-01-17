@@ -1,146 +1,42 @@
-require("CheckLists")
+require("OreSearch")
+local returnSteps=0
 
-function forward()
-    while not turtle.forward() do
-        turtle.dig()
-    end
-    return true
-end
+local torch=0
 
-function up()
-    while not turtle.Up() do
-        turtle.digUp()
-    end
-    return true
-end
+for i=1, 100 do
 
-function down()
-    while not turtle.down() do
-        turtle.digDown()
-    end
-    return true
-end
-
-function turnRight()
-    if turtle.turnRight() then
-        return true
-    else
-        return false
-    end
-end
-
-function turnLeft()
-    if turtle.turnLeft() then
-        return true
-    else
-        return false
-    end
-end
-
-function turnaround()
-    turtle.turnRight()
-    turtle.turnRight()
-end
-
-function back()
-    turnaround()
-    forward()
-    turnaround()
-end
-
-function canDig(blockData)
-    if blockData.name == "forbidden_arcanus:stella_arcanum" then
-        return false
-    end
-end
-
-function dig()
-    blockPresent, blockData = turtle.inspect()
-    if canDig(blockData) then
-        turtle.dig()
-    else
-        print("I am not supposed to dig here")
-    end
-end
-
-function digUp()
-    blockPresent, blockData = turtle.inspectUp()
-    if canDig(blockData) then
-        turtle.digUp()
-    else
-        print("I am not supposed to dig here")
-    end
-end
-
-function digDown()
-    blockPresent, blockData = turtle.inspectDown()
-    if canDig(blockData) then
-        turtle.digDown()
-    else
-        print("I am not supposed to dig here")
-    end
-end
-
-function checkPlanar(targetOres)
-    local success, data = turtle.inspect()
-    blockName = data.name
-    if success then
-        if setContains(targetOres, blockName) then
-            forward()
-            checkChildren(targetOres)
-            back()
+    if forward() then
+        print("Here")
+        returnSteps = returnSteps + 1
+        checkChildren(targetOres)
+        while digUp() do
+            print("Digging up")
         end
-    end
-end
-
-function checkChildren(targetOres)
-
-    children = {"forward", "right", "left", "up", "down"}
-
-    for key, child in pairs(children) do
-        if child == "forward" then
-            checkPlanar(targetOres)
-        end
-
-        if child == "right" then
-            turnRight()
-            checkPlanar(targetOres)
+        if torch == 6 then
             turnLeft()
-        end
-
-        if child == "left" then
-            turnLeft()
-            checkPlanar(targetOres)
+            turtle.placeUp() --Need to check for torch
             turnRight()
+            torch=0
         end
-
-        if child == "up" then
-            local success, data = turtle.inspectUp()
-            blockName = data.name
-            if success then
-                if setContains(targetOres, blockName) then
-                    up()
-                    checkChildren(targetOres)
-                    down()
-                end
-            end
-        end
-
-        if child == "down" then
-            local success, data = turtle.inspectDown()
-            blockName = data.name
-            if success then
-                if setContains(targetOres, blockName) then
-                    down()
-                    checkChildren(targetOres)
-                    up()
-                end
-            end
-        end
-
-
     end
 
+    torch = torch + 1
 end
 
-return {forward=forward, up=up, turnLeft=turnLeft, turnRight=turnRight, turnaround=turnaround, down=down, checkChildren=checkChildren, checkPlanar=checkPlanar}
+turnLeft()
+turnLeft()
+
+for j=1, returnSteps do
+    if forward() then
+        checkChildren(targetOres)
+    end
+    if torch == 6 then
+        turnRight()
+        turtle.placeDown() --Need to check for torch
+        turnLeft()
+        torch=0
+    end
+end
+
+args = {...}
+targetOres = (args[1])
