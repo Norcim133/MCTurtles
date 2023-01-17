@@ -104,3 +104,5 @@ function checkChildren(ore)
     end
 
 end
+
+return {forward=forward, up=up, turnLeft=turnLeft, turnRight=turnRight, turnaround=turnaround, down=down, checkChildren=checkChildren, checkPlanar=checkPlanar}
