@@ -8,7 +8,6 @@ function startMining(targetOres)
     for i=1, 100 do
 
         if forward() then
-            print("Here")
             returnSteps = returnSteps + 1
             checkChildren(targetOres)
             while digUp() do
@@ -32,6 +31,7 @@ function returnToStart(targetOres)
 
     for j=1, returnSteps do
         if forward() then
+            returnSteps = returnSteps - 1
             checkChildren(targetOres)
         end
         if torch == 6 then
@@ -70,5 +70,8 @@ end
 
 
 args = {...}
-targetOres = (args[1])
+--targetOres = (args[1])
+targetOres={}
+targetOres{"minecraft:iron_ore"}=true
+targetOres{"minecraft:coal_ore"}=true
 stripMine(targetOres)

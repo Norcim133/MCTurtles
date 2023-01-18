@@ -8,7 +8,7 @@ function forward()
 end
 
 function up()
-    while not turtle.Up() do
+    while not turtle.up() do
         digUp()
     end
     return true
