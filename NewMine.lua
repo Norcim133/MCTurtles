@@ -51,6 +51,8 @@ end
 function canDig(blockData)
     if blockData.name == "forbidden_arcanus:stella_arcanum" then
         return false
+    else
+        return true
     end
 end
 
